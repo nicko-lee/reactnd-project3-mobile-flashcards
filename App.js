@@ -1,24 +1,33 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import FlashcardDeck from './components/FlashcardDeck';
+import { createBottomTabNavigator } from 'react-navigation';
+import { FontAwesome } from '@expo/vector-icons'
+import HomeScreen from './components/HomeScreen';
+import AddNewDeckScreen from './components/AddNewDeckScreen';
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-        <Text>She sells seashells by the seashore.</Text>
-      </View>
+        <Tabs />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const Tabs = createBottomTabNavigator({
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: {
+      tabBarLabel: 'Home',
+      tabBarIcon: ({ tintColor }) => <FontAwesome name='home' size={30} color={tintColor} />
+    },
   },
-});
+  AddNewDeck: {
+    screen: AddNewDeckScreen,
+    navigationOptions: {
+      tabBarLabel: 'Add New Deck',
+      tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
+    },
+  },
+},
+);
+
