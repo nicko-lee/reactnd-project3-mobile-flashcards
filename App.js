@@ -1,9 +1,10 @@
 import React from 'react';
-import FlashcardDeck from './components/FlashcardDeck';
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import { FontAwesome } from '@expo/vector-icons'
 import HomeScreen from './components/HomeScreen';
 import AddNewDeckScreen from './components/AddNewDeckScreen';
+import CardDeckDetail from './components/CardDeckDetail';
+import { Text, View, TouchableOpacity } from 'react-native';
 
 export default class App extends React.Component {
   render() {
@@ -12,10 +13,26 @@ export default class App extends React.Component {
     );
   }
 }
+  
+  // list out all the screens in your app
+  const HomeStack = createStackNavigator({
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+        header: null
+      },
+    },
+    CardDeckDetail: {
+      screen: CardDeckDetail,
+      navigationOptions: {
+        headerTitle: 'View Decks'
+      },
+    },
+  })
 
 const Tabs = createBottomTabNavigator({
   Home: {
-    screen: HomeScreen,
+    screen: HomeStack,
     navigationOptions: {
       tabBarLabel: 'Home',
       tabBarIcon: ({ tintColor }) => <FontAwesome name='home' size={30} color={tintColor} />

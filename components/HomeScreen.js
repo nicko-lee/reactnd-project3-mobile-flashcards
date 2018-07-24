@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react'
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import FlashcardDeck from './FlashcardDeck';
+import { SEED_STARTER_DECKS } from '../utils/seedStarterDecks';
 
 class HomeScreen extends Component {
-
 
     render() {
         return (
@@ -11,16 +11,11 @@ class HomeScreen extends Component {
                     <Text style={styles.titleText}>Your Flashcard Decks</Text>
                     <ScrollView style={styles.scrollViewContainer}> 
                         <Text>Select a deck to view all the cards it contains, add new cards or start a quiz:</Text>
-                        <FlashcardDeck />
-                        <FlashcardDeck />
-                        <FlashcardDeck />
-                        <FlashcardDeck />
-                        <FlashcardDeck />
-                        <FlashcardDeck />
-                        <FlashcardDeck />
-                        <FlashcardDeck />
-                        <FlashcardDeck />
-                        <FlashcardDeck />
+                        { SEED_STARTER_DECKS.map( deck => <FlashcardDeck 
+                            key={deck.title} 
+                            deckName={deck.title}
+                            numberOfCards={deck.questions.length}
+                        />)}
                     </ScrollView>
                 </View>
 

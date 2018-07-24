@@ -12,7 +12,9 @@ The key learnings I derived from this project were manifold. Here are some that 
 
 *  **Working with the keyboard** - had to find a way to create a DismissKeyboard reusable component. So that when people touch away from the TextInput fields it would dismiss the keyboard.
 
-*  **Working with KeyboardAvoidingView in conjunction with TabNavigator** - for some reason I followed along with video tutorials and what seemed like a very simple matter of swapping out the default View for a KeyboardAvoidingView yet weird funky things happened when I tried over and over again.
+*  **Working with KeyboardAvoidingView in conjunction with TabNavigator** - for some reason I followed along with video tutorials and what seemed like a very simple matter of swapping out the default View for a KeyboardAvoidingView yet weird funky things happened when I tried over and over again. I suspect it is to do with TabNavigator and something is going on there that doesn't let them work together.
+
+*  **Working with ScrollView** - good experience with this and was intuitive and easy to work with. Which is not always the case with many of the other components I had to deal with.
 
 *  **Working with TextInput** - this was surprisingly hard to work with. The HTML equivalent of a form input element was far easier to work with.
 
