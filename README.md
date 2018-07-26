@@ -20,6 +20,12 @@ The key learnings I derived from this project were manifold. Here are some that 
 
 *  **Debugging** - with React for Web Chrome or Firefox dev tools were invaluable. You could easily see what is going on in your app and also can use Inspect Element and so on. But here I felt that my hands were tied and I am still in the midst of figuring out how to debug this stuff.
 
+*  **Working with StackNavigators nested within TabNavigators** - first I learnt how to use TabNavigators on their own to get a feel for it. Then I learnt how to work with StackNavigators on their own. But the moment I tried to put them together to create more complex routing in my app, everything started failing. Took me awhile but I figured out you could nest stacks in tabs and this helped tremendously going forward.
+
+*  **Learning how to work with React Navigation's Navigation prop** - one cool feature of React Navigation is that similar to React Router for Web, it comes with some free data out of the box. In this case you get the navigation prop which lets you access quite a few things as well as include parameters together with your routing which I utilized in this app.
+
+*  **Wrapping my head around the asynchronous nature of AsyncStorage** - promises and callbacks was very confusing and at times the results I was getting were very strange and just couldn't seem to get my data from AsyncStorage. But once I realized it returns promises and after looking more into the concept of promises and how they can be in one of three states and don't execute in order, it started to make a bit more sense. Still confusing stuff though.
+
 
 
 

@@ -8,6 +8,7 @@ class AddNewDeckScreen extends Component {
         text: ''
     }
 
+
     render() {
         return (
             <DismissKeyboard>
