@@ -3,29 +3,11 @@ import { SEED_STARTER_DECKS } from './seedStarterDecks';
 
 export const APP_DATA = 'APP_DATA'
 
-// export const DECKS_STORAGE_KEY = 'MobileFlashcardsApp:decks'
-
-// export function submitEntry ({ entry, key }) {
-//   return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
-//     [key]: entry
-//   }))
-// }
-
-// export function removeEntry (key) {
-//   return AsyncStorage.getItem(DECKS_STORAGE_KEY)
-//     .then((results) => {
-//       const data = JSON.parse(results)
-//       data[key] = undefined
-//       delete data[key]
-//       AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
-//     })
-// }
-
  // fetch the data from mock "DB" and parse (convert from string back into JS array) and then console.log it
 export async function fetchData () {
   try {
     const deckData = await AsyncStorage.getItem(APP_DATA);
-    console.log(deckData);
+    // console.log(deckData);
     return await JSON.parse(deckData);
   }
   catch(error) {
@@ -41,4 +23,15 @@ export function saveData (dataToSave) {
 // function to reset data to intial seed data
 export function resetData () {
   AsyncStorage.setItem(APP_DATA, JSON.stringify(SEED_STARTER_DECKS))
+}
+
+export function addCard(deckId, card) {
+  return AsyncStorage.getItem(APP_DATA)
+    .then(results => JSON.parse(results))
+    .then((results) => {
+      results[deckId].questions.push(card)
+      AsyncStorage.setItem(APP_DATA, JSON.stringify(results))
+
+      return results
+    })
 }

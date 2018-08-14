@@ -26,6 +26,11 @@ The key learnings I derived from this project were manifold. Here are some that 
 
 *  **Wrapping my head around the asynchronous nature of AsyncStorage** - promises and callbacks was very confusing and at times the results I was getting were very strange and just couldn't seem to get my data from AsyncStorage. But once I realized it returns promises and after looking more into the concept of promises and how they can be in one of three states and don't execute in order, it started to make a bit more sense. Still confusing stuff though.
 
+*  **Working with AsyncStorage API** - Had a bit of difficulty using the setItem() method at first and kept getting fatal errors. But soon learnt about the mergeItem() method which helped me solve the issues around adding a single card to an existing deck.
+
+
+
+
 
 
 

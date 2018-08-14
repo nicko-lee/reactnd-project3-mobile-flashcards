@@ -3,7 +3,10 @@ import Button from './Button';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { DismissKeyboard } from './DismissKeyboard';
 import PropTypes from 'prop-types';
-import { saveData, fetchData } from '../utils/api';
+import { addNewQuestion, addCard } from '../utils/api';
+import { StackActions, NavigationActions } from 'react-navigation';
+import { connect } from 'react-redux';
+import { addCardToDeck } from '../actions/root';
 
 class AddNewCardScreen extends Component {
     state = {
@@ -11,31 +14,40 @@ class AddNewCardScreen extends Component {
         answerText: ''
     }
 
+    componentDidMount = () => {
+        console.log("From AddNewCardScreen componentDidMount: ", this.props.navigation.state.params.deckId)
+    }
+
     static propTypes = {
-        navigation: PropTypes.object.isRequired
+        navigation: PropTypes.object.isRequired, // deckId and deckName 
+        saveCardToStore: PropTypes.func.isRequired,
+        appData: PropTypes.object.isRequired
     };
 
     postToDb = () => {
+        console.log("From AddNewCardScreen: submit button just clicked triggering postToDb()")
         // prepare question and answer object to append to the deck's questions array
         const newQuestion = {
             question: this.state.questionText,
             answer: this.state.answerText
         }
-        // search AsyncStorage for correct slice of state (i.e. the correct deck of the array of decks)
-        fetchData().then(appData => {
-            // and then append new question to the deck array
-            appData.forEach(deck => {
-                if (deck.title === this.props.navigation.state.params.deckName) {
-                    deck.questions.push(newQuestion)
-                }
-            })
-            console.log(appData)
-        // make API call to save to AsyncStorage. So basically we are using async storage as central source of truth
-        saveData(appData);
+        // update state in Redux store
+        this.props.saveCardToStore(this.props.navigation.state.params.deckId, newQuestion);
+        console.log("From AddNewCardScreen inside postToDb(). Checking fullState of Redux", this.props.fullState)
+
+        // update state in AsyncStorage
+        let newAsyncStoreState = addCard(this.props.navigation.state.params.deckId, newQuestion);
+        console.log("From AddNewCardScreen inside postToDb(). Checking updated state of DB", newAsyncStoreState);
+
+        // reroute to individual deck view
+        this.props.navigation.navigate('CardDeckDetail', { 
+            deckName: this.props.navigation.state.params.deckName,
+            // numberOfCards
         })
     }
 
     render() {
+        // console.log('full state', this.props.fullState)
         return ( 
             <DismissKeyboard>
                 <View style={styles.container}>
@@ -64,14 +76,11 @@ class AddNewCardScreen extends Component {
                     <Button 
                         children="Create New Card"
                         onPress={this.postToDb}
-     
                     />
                 </View>    
             </DismissKeyboard>
         )
-
     }
-
 }
 
 const styles = StyleSheet.create({
@@ -107,4 +116,16 @@ const styles = StyleSheet.create({
     },
 })
 
-export default AddNewCardScreen;
+function mapStateToProps (state) {
+    return {
+      appData: state.appData,
+      fullState: state
+    }
+  }
+  
+  const mapDispatchToProps = dispatch => ({
+    saveCardToStore: (deckId, question) => dispatch(addCardToDeck(deckId, question))
+  }) 
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddNewCardScreen);
+

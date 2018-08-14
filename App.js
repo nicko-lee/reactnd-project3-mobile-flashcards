@@ -6,38 +6,53 @@ import AddNewDeckScreen from './components/AddNewDeckScreen';
 import CardDeckDetail from './components/CardDeckDetail';
 import { AsyncStorage, TouchableOpacity, Text, View } from 'react-native';
 import AddNewCardScreen from './components/AddNewCardScreen';
-import { fetchData, saveData } from './utils/api'
+import { fetchData, saveData, APP_DATA } from './utils/api'
 import { SEED_STARTER_DECKS } from './utils/seedStarterDecks';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import rootReducers from './reducers/root';
+import { getAllDecks } from './reducers/root';
+import { connect } from 'react-redux';
 
 export default class App extends React.Component {
 
-  // have option to delete decks and reset all decks
-
-  // have some validation that u cannot have 2 decks of the same title
-
+  state = {
+    refreshState: false,
+    appData: {}
+  }
 
   componentDidMount = () => {
-    // initializing the app data
-    saveData(SEED_STARTER_DECKS);
-    fetchData();
+      this.initialiseDecks();
 }
 
-  // check if requires initialization - i.e. if current app data is diff from whats in storage?? hmm 
+  refreshState = () => {
+    this.state.refreshState === false ? this.setState({refreshState: true}) : this.setState({refreshState: false});
+  }
 
+  // initializing the app data if needed  - this checks if it requires initialization
+  initialiseDecks = async () => {
+    try {
+        let decks = await AsyncStorage.getItem(APP_DATA);
+        if (decks === null) {
+          saveData(SEED_STARTER_DECKS);
+        } 
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
+  // setup Redux
+    defaultStore = createStore(
+      rootReducers,
+      // this.state.appData
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  );
   
   render() {
     return (
+      <Provider store={this.defaultStore} >
         <Tabs />
-        // <View>
-        //   <Text>Maoxian</Text>
-        //   <TouchableOpacity onPress={this.displayData}>
-        //     <Text>Click me to display data</Text>
-        //   </TouchableOpacity>
-        //   <TouchableOpacity onPress={this.saveData}>
-        //     <Text>Click me to save data</Text>
-        //   </TouchableOpacity>
-        //   <Text>{SEED_STARTER_DECKS[0].title}</Text>
-        // </View>
+      </Provider>
     );
   }
 }

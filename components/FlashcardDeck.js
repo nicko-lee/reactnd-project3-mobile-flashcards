@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
+import { fetchData } from '../utils/api';
 
 class FlashcardDeck extends Component {
 
@@ -17,9 +18,11 @@ class FlashcardDeck extends Component {
             style={styles.deckContainer}
             onPress={() => this.props.navigation.navigate('CardDeckDetail', { 
                 deckName: this.props.deckName,
+                deckId: this.props.deckName.replace(/\s+/g, ''),
                 numberOfCards: this.props.numberOfCards
              })}>
             <Text>{this.props.deckName}</Text>
+            <Text>{this.props.numberOfCards}</Text>
         </TouchableOpacity>
 
         )
