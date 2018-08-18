@@ -2,12 +2,42 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import Button from './Button';
 import { DismissKeyboard } from './DismissKeyboard';
+import { addNewDeck } from '../actions/root';
+import { addDeck } from '../utils/api';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class AddNewDeckScreen extends Component {
     state = {
         text: ''
     }
 
+    static propTypes = {
+        navigation: PropTypes.object.isRequired,  
+        addDeckToStore: PropTypes.func.isRequired
+    };
+
+    postToDb = () => {
+        // store the user input
+        let deckName = this.state.text;
+
+        // reset the text field so the next time someone returns to this screen it will be blank
+        this.setState({ text: '' });
+
+        // update state in Redux store
+        this.props.addDeckToStore(deckName);
+        console.log("From AddNewDeckScreen inside postToDb(). Checking fullState of Redux", this.props.fullState)
+
+        // update state in AsyncStorage
+        let newAsyncStoreState = addDeck(deckName);
+        console.log("From AddNewDeckScreen inside postToDb(). Checking updated state of DB", newAsyncStoreState);
+
+        // reroute to individual deck view
+        this.props.navigation.navigate('CardDeckDetail', { 
+            deckName,
+            deckId: deckName.replace(/\s/g, '')
+        })
+    }
 
     render() {
         return (
@@ -24,7 +54,10 @@ class AddNewDeckScreen extends Component {
                             style={styles.textInput}
                             // onSubmitEditing={Keyboard.dismiss}
                         />
-                    <Button children="Create New Deck"/>
+                    <Button 
+                        children="Create New Deck"
+                        onPress={this.postToDb}    
+                    />
                 </View>    
             </DismissKeyboard>
 
@@ -65,4 +98,18 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AddNewDeckScreen;
+// hmm though I don't actually need this data for this component but for some reason I cannot remove it
+// without a mapStateToProps param, the connect function below won't work so I just left this in here
+function mapStateToProps (state) {
+    return {
+      appData: state.appData,
+      fullState: state
+    }
+  }
+  
+  const mapDispatchToProps = dispatch => ({
+    addDeckToStore: deckName => dispatch(addNewDeck(deckName))
+  }) 
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddNewDeckScreen);
+// export default AddNewDeckScreen;

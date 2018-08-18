@@ -28,6 +28,8 @@ The key learnings I derived from this project were manifold. Here are some that 
 
 *  **Working with AsyncStorage API** - Had a bit of difficulty using the setItem() method at first and kept getting fatal errors. But soon learnt about the mergeItem() method which helped me solve the issues around adding a single card to an existing deck.
 
+*  **Working with 2 different 'data stores' and appreciating the challenges to keep them both in sync** - I realized that I was essentially working with 2 different 'data stores' - one being the Redux store which contained my app state and the other being AsyncStorage which persisted my app state. Hence for each time a user inputs any new data, I need to handle it twice, once for Redux and the other for AsycnStorage. And each 'scheme' handles the data a little differently and also the methods and ways you access and manipulate that data is different so it was tricky at first needing to understand both ways and handling them both without conflating the two in each postToDb() method in my app.
+
 
 
 

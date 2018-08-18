@@ -35,3 +35,12 @@ export function addCard(deckId, card) {
       return results
     })
 }
+
+export function addDeck(deckName) {
+  return AsyncStorage.mergeItem(APP_DATA, JSON.stringify({
+    [deckName.replace(/\s+/g, '')]: {
+      title: deckName,
+      questions: [],
+    },
+  }))
+}

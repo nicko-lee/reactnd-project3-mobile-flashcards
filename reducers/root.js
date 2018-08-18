@@ -25,8 +25,8 @@ export const appReducer = (state = {}, action) => {
       case ADD_NEW_DECK :
         return {
           ...state,
-            [action.deckId]: {
-              title:action.deckId,
+            [action.deckName.replace(/\s+/g, '')]: {
+              title:action.deckName,
               questions: []
             }
         }

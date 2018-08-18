@@ -4,7 +4,6 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 import { DismissKeyboard } from './DismissKeyboard';
 import PropTypes from 'prop-types';
 import { addNewQuestion, addCard } from '../utils/api';
-import { StackActions, NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { addCardToDeck } from '../actions/root';
 

@@ -16,18 +16,9 @@ import { connect } from 'react-redux';
 
 export default class App extends React.Component {
 
-  state = {
-    refreshState: false,
-    appData: {}
-  }
-
   componentDidMount = () => {
       this.initialiseDecks();
 }
-
-  refreshState = () => {
-    this.state.refreshState === false ? this.setState({refreshState: true}) : this.setState({refreshState: false});
-  }
 
   // initializing the app data if needed  - this checks if it requires initialization
   initialiseDecks = async () => {
@@ -79,6 +70,33 @@ export default class App extends React.Component {
     },
   })
 
+  const AddDeckStack = createStackNavigator({
+    AddNewDeckScreen: {
+      screen: AddNewDeckScreen,
+      navigationOptions: {
+        header: null
+      },
+    },
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+        header: null
+      },
+    },
+    CardDeckDetail: {
+      screen: CardDeckDetail,
+      navigationOptions: {
+        headerTitle: 'View Decks'
+      },
+    },
+    AddNewCard: {
+      screen: AddNewCardScreen,
+      navigationOptions: {
+        headerTitle: 'Add New Card to Deck'
+      },  
+    },
+  })
+
 const Tabs = createBottomTabNavigator({
   Home: {
     screen: HomeStack,
@@ -88,7 +106,7 @@ const Tabs = createBottomTabNavigator({
     },
   },
   AddNewDeck: {
-    screen: AddNewDeckScreen,
+    screen: AddDeckStack,
     navigationOptions: {
       tabBarLabel: 'Add New Deck',
       tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />

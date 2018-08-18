@@ -18,7 +18,7 @@ class FlashcardDeck extends Component {
             style={styles.deckContainer}
             onPress={() => this.props.navigation.navigate('CardDeckDetail', { 
                 deckName: this.props.deckName,
-                deckId: this.props.deckName.replace(/\s+/g, ''),
+                deckId: this.props.deckName.replace(/\s+/g, ''), // removes spaces from the string to create the unique id for the data model
                 numberOfCards: this.props.numberOfCards
              })}>
             <Text>{this.props.deckName}</Text>
