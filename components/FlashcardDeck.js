@@ -21,8 +21,8 @@ class FlashcardDeck extends Component {
                 deckId: this.props.deckName.replace(/\s+/g, ''), // removes spaces from the string to create the unique id for the data model
                 numberOfCards: this.props.numberOfCards
              })}>
-            <Text>{this.props.deckName}</Text>
-            <Text>{this.props.numberOfCards}</Text>
+            <Text style={styles.textStyle}>{this.props.deckName}</Text>
+            <Text>{this.props.numberOfCards} cards</Text>
         </TouchableOpacity>
 
         )
@@ -44,9 +44,12 @@ const styles = StyleSheet.create({
             width: 0,
             height: 3
           },
-        // justifyContent: 'center',
-        // paddingTop: 25
-  }});
+  },
+  textStyle: {
+      fontSize: 19
+  }
+
+});
 
 // export default FlashcardDeck but wrapped around withNavigation to pass props directly here
 // https://reactnavigation.org/docs/en/connecting-navigation-prop.html

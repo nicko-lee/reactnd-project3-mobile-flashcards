@@ -13,6 +13,7 @@ import { Provider } from 'react-redux';
 import rootReducers from './reducers/root';
 import { getAllDecks } from './reducers/root';
 import { connect } from 'react-redux';
+import QuizScreen from './components/QuizScreen';
 
 export default class App extends React.Component {
 
@@ -68,6 +69,12 @@ export default class App extends React.Component {
         headerTitle: 'Add New Card to Deck'
       },  
     },
+    QuizScreen: {
+      screen: QuizScreen,
+      navigationOptions: {
+        headerTitle: 'Quiz Me!'
+      },
+    },
   })
 
   const AddDeckStack = createStackNavigator({
@@ -94,6 +101,12 @@ export default class App extends React.Component {
       navigationOptions: {
         headerTitle: 'Add New Card to Deck'
       },  
+    },
+    QuizScreen: {
+      screen: QuizScreen,
+      navigationOptions: {
+        headerTitle: 'Quiz Me!'
+      },
     },
   })
 

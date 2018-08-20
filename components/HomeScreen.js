@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
       fontFamily: 'Cochin',
     },
     titleText: {
-      fontSize: 20,
+      fontSize: 29,
       fontWeight: 'bold',
       paddingBottom: 20
     },
