@@ -54,10 +54,12 @@ class AddNewDeckScreen extends Component {
                             style={styles.textInput}
                             // onSubmitEditing={Keyboard.dismiss}
                         />
-                    <Button 
-                        children="Create New Deck"
-                        onPress={this.postToDb}    
-                    />
+                    <View style={styles.button}>
+                        <Button 
+                            children="Create New Deck"
+                            onPress={this.postToDb}    
+                        />
+                    </View>
                 </View>    
             </DismissKeyboard>
 
@@ -66,23 +68,21 @@ class AddNewDeckScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        // backgroundColor: 'powderblue',
-        alignItems: 'stretch',
-        borderRadius: 25,
-        padding: 10,
-        margin: 5,
-        justifyContent: 'flex-start',
-        paddingTop: 25,
+  container: {
+    alignItems: 'center',
+    // backgroundColor: 'powderblue', 
+    flex: 1,
+    padding: 8
   },
     titleText: {
-        fontSize: 20,
+        fontSize: 29,
         fontWeight: 'bold',
-        paddingBottom: 5,
+        marginTop: 50,
+        marginBottom: 10
     },
     textInput: {
-        height: 75,
+        height: 125,
+        width: 300,
         margin: 20,
         padding: 10,
         borderColor: 'silver',
@@ -96,6 +96,11 @@ const styles = StyleSheet.create({
             height: 3
           },
     },
+    button: {
+        // backgroundColor: 'pink',
+        marginTop: 10,
+        width: 300
+    },  
 });
 
 // hmm though I don't actually need this data for this component but for some reason I cannot remove it

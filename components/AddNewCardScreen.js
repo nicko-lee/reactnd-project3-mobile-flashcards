@@ -41,7 +41,6 @@ class AddNewCardScreen extends Component {
         // reroute to individual deck view
         this.props.navigation.navigate('CardDeckDetail', { 
             deckName: this.props.navigation.state.params.deckName,
-            // numberOfCards
         })
     }
 
@@ -50,7 +49,7 @@ class AddNewCardScreen extends Component {
         return ( 
             <DismissKeyboard>
                 <View style={styles.container}>
-                    <Text style={styles.titleText}>Deck: {this.props.navigation.state.params.deckName}</Text>
+                    <Text style={styles.deckTitle}>{this.props.navigation.state.params.deckName}</Text>
                     {/* <Text>{this.state.questionText}</Text> */}
                         <TextInput
                             multiline = {true}
@@ -72,10 +71,12 @@ class AddNewCardScreen extends Component {
                             style={styles.textInput}
                             // onSubmitEditing={Keyboard.dismiss}
                         />
-                    <Button 
-                        children="Create New Card"
-                        onPress={this.postToDb}
-                    />
+                    <View style={styles.button}>
+                        <Button 
+                            children="Create New Card"
+                            onPress={this.postToDb}
+                        />
+                    </View>
                 </View>    
             </DismissKeyboard>
         )
@@ -83,18 +84,9 @@ class AddNewCardScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        // backgroundColor: 'powderblue',
-        alignItems: 'stretch',
-        borderRadius: 25,
-        padding: 10,
-        margin: 5,
-        justifyContent: 'flex-start',
-        paddingTop: 25,
-  },
     textInput: {
-        height: 75,
+        height: 95,
+        width: 300,
         margin: 20,
         padding: 10,
         borderColor: 'silver',
@@ -108,11 +100,22 @@ const styles = StyleSheet.create({
             height: 3
         },
     },
-    titleText: {
-        fontSize: 20,
+    container: {
+        alignItems: 'center',
+        // backgroundColor: 'powderblue', 
+        flex: 1
+      },
+    deckTitle: {
+        fontSize: 29,
         fontWeight: 'bold',
-        paddingBottom: 5,
-    },
+        marginTop: 20,
+        marginBottom: 20
+      },
+    button: {
+        // backgroundColor: 'pink',
+        marginTop: 5,
+        width: 300
+    },  
 })
 
 function mapStateToProps (state) {

@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, AsyncStorage } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import Button from './Button';
 import FlippableCard from './FlippableCard';
 import PropTypes from 'prop-types';
-// import setDailyNotification from '../utils/notifications';
+import { setLocalNotification, clearLocalNotifications } from '../utils/notificationsHelper';
 
 class QuizScreen extends React.Component {
 
@@ -17,6 +17,11 @@ class QuizScreen extends React.Component {
     currentCard: 0,
     points: 0 
   };
+
+  componentDidMount = () => {
+    AsyncStorage.getItem("MobileFlashcards:notifications")
+    .then(results => console.log("From QuizScreen checking if Notifications Key is inside AsyncStore: ",JSON.parse(results)))
+  }
 
   _navigateBack() {
     const navigate = NavigationActions.back();
@@ -32,7 +37,7 @@ class QuizScreen extends React.Component {
     return (
       <View style={{ flex: 1, justifyContent: 'center' }}>
         <Text style={[styles.deckTitle, { textAlign: 'center' }]}>
-          Good job! You have finished the deck!
+          Awesome work! You have finished the deck!
         </Text>
 
         <View style={[styles.bottom, { marginTop: 40 }]}>
@@ -68,7 +73,8 @@ class QuizScreen extends React.Component {
     const { deck } = this.props.navigation.state.params;
 
     if (this._hasFinishedGame()) {
-      // setDailyNotification({ startingFromDay: 1, overwriteExisting: true });
+      // clear todays notification prompt as you've done your quiz today. Then set tomorrow's reminder
+      clearLocalNotifications().then(setLocalNotification());
 
       return this._finishedMessage();
     }
@@ -101,7 +107,7 @@ class QuizScreen extends React.Component {
     const { deck } = this.props.navigation.state.params;
     console.log("From QuizScreen inside render() to check value of deck", deck);
     return (
-      <View style={styles.center}>
+      <View style={styles.container}>
         <Text style={styles.deckTitle}>{deck.title}</Text>
         <Text style={styles.deckDescription}>
           Card: #{Math.min(this.state.currentCard + 1, deck.questions.length)} of {deck.questions.length}
@@ -116,7 +122,7 @@ class QuizScreen extends React.Component {
 
 const styles = StyleSheet.create({
 
-  center: {
+  container: {
     alignItems: 'center',
     // backgroundColor: 'powderblue',
     flex: 1

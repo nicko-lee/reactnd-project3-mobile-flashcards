@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, Fragment } from 'react';
+// import ReactDOM from 'react-dom';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, AsyncStorage } from 'react-native';
 import FlashcardDeck from './FlashcardDeck';
 import { SEED_STARTER_DECKS } from '../utils/seedStarterDecks';
@@ -32,6 +33,7 @@ class HomeScreen extends Component {
 
     resetDecks = () => {
         saveData(SEED_STARTER_DECKS);
+        // ReactDOM.render();
     }
 
     render() {
@@ -50,10 +52,12 @@ class HomeScreen extends Component {
                             />)
                             })}
                     </ScrollView>
-                    <Button
-                        children="Reset Decks"
-                        onPress={this.resetDecks}
-                    />
+                    <View style={styles.button}>
+                        <Button
+                            children="Reset Decks"
+                            onPress={this.resetDecks}
+                        />
+                    </View>
                 </View>
         )
     }
@@ -79,6 +83,11 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       paddingBottom: 20
     },
+    button: {
+        // backgroundColor: 'pink',
+        marginTop: 5,
+        width: 300
+    },  
   });
 
 // export default HomeScreen;

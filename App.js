@@ -11,14 +11,16 @@ import { SEED_STARTER_DECKS } from './utils/seedStarterDecks';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducers from './reducers/root';
-import { getAllDecks } from './reducers/root';
-import { connect } from 'react-redux';
 import QuizScreen from './components/QuizScreen';
+import { setLocalNotification } from './utils/notificationsHelper'
+
 
 export default class App extends React.Component {
 
   componentDidMount = () => {
       this.initialiseDecks();
+      // the first notification has to be set here the first time the app loads. Henceforth it is handled inside QuizScreen
+      setLocalNotification();
 }
 
   // initializing the app data if needed  - this checks if it requires initialization
@@ -66,7 +68,7 @@ export default class App extends React.Component {
     AddNewCard: {
       screen: AddNewCardScreen,
       navigationOptions: {
-        headerTitle: 'Add New Card to Deck'
+        headerTitle: 'Add Card to Deck'
       },  
     },
     QuizScreen: {
