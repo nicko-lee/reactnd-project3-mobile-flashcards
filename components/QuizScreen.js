@@ -36,18 +36,18 @@ class QuizScreen extends React.Component {
   _finishedMessage() {
     return (
       <View style={{ flex: 1, justifyContent: 'center' }}>
-        <Text style={[styles.deckTitle, { textAlign: 'center' }]}>
+        <Text style={[styles.finishMessage, { textAlign: 'center' }]}>
           Awesome work! You have finished the deck!
         </Text>
 
-        <View style={[styles.bottom, { marginTop: 40 }]}>
+        <View style={[styles.button, { marginTop: 40 }]}>
           <Button
-            // style={styles.secondaryButton}
-            // txtStyle={styles.secondaryButtonText}
             onPress={() => this._navigateBack()}
             children='Back to deck'
           >
           </Button>
+        </View>
+        <View style={styles.button}>
           <Button 
             onPress={() => this._restartQuiz()}
             children='Restart quiz!'
@@ -84,14 +84,14 @@ class QuizScreen extends React.Component {
         {/* remember that this itself is a component that contains View elements in them and that was stumping me as I didn't realise where all this random styling was coming from */}
         <FlippableCard card={deck.questions[this.state.currentCard]} />
          <View style={{ marginTop: 12 }}>
-          <View style={styles.bottom}>
+          <View style={styles.button}>
             <Button
               onPress={() => this._nextCard(0)}
               children='Incorrect'
             >
             </Button>
           </View>
-          <View style={styles.bottom}>
+          <View style={styles.button}>
             <Button
               onPress={() => this._nextCard(1)}
               children='Correct'
@@ -133,6 +133,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 5
   },
+  finishMessage: {
+    fontSize: 29,
+    marginBottom: 60
+  },
   deckDescription: {
     color: 'gray',
     fontSize: 22,
@@ -140,7 +144,7 @@ const styles = StyleSheet.create({
     padding: 0,
     marginBottom: 5
   },
-  bottom: {
+  button: {
     alignSelf: 'stretch',
     // backgroundColor: 'pink',
     marginTop: 5

@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
   deckDescription: {
     color: 'gray',
     fontSize: 22,
-    // fontWeight: 'bold',
     padding: 0,
     marginBottom: 20
   },

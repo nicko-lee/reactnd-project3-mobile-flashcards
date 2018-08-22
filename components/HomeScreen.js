@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from 'react';
-// import ReactDOM from 'react-dom';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, AsyncStorage } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, ScrollView, Alert } from 'react-native';
 import FlashcardDeck from './FlashcardDeck';
 import { SEED_STARTER_DECKS } from '../utils/seedStarterDecks';
 import { saveData, fetchData } from '../utils/api';
@@ -17,7 +16,6 @@ class HomeScreen extends Component {
     componentDidMount = async () => {
         // grabs data from mock DB and does initial load of app state into Redux
         await this.getData();
-        // this.resetDecks();
     }
 
     getData = async () => {
@@ -33,7 +31,7 @@ class HomeScreen extends Component {
 
     resetDecks = () => {
         saveData(SEED_STARTER_DECKS);
-        // ReactDOM.render();
+        Alert.alert('Reload App', 'Please press Cmd + R to refresh page to see newly resetted decks');
     }
 
     render() {
@@ -41,7 +39,7 @@ class HomeScreen extends Component {
                 <View style={styles.container}>
                     <Text style={styles.titleText}>Your Flashcard Decks</Text>
                     <ScrollView style={styles.scrollViewContainer}> 
-                        <Text>Select a deck to view all the cards it contains, add new cards or start a quiz:</Text>
+                        <Text style={styles.instructionText}>Select a deck to view all the cards it contains, add new cards or start a quiz:</Text>
                         {   
                             Object.keys(this.props.appData.appData).map( deckId => {
                             return (
@@ -68,7 +66,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#f8f9fa',
         alignItems: 'center',
-        // justifyContent: 'center',
         paddingTop: 25,
         paddingBottom: 15
     },
@@ -81,7 +78,13 @@ const styles = StyleSheet.create({
     titleText: {
       fontSize: 29,
       fontWeight: 'bold',
-      paddingBottom: 20
+      paddingBottom: 15
+    },
+    instructionText: {
+        textAlign: 'center',
+        fontSize: 17,
+        marginBottom: 10,
+        padding: 8
     },
     button: {
         // backgroundColor: 'pink',
